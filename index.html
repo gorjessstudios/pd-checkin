@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Small Groups That Work: Check In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Rubik:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#14213D; --navy2:#1F2F55; --cream:#FBF8F1; --card:#FFFDF8; --border:#E4DDCB;
+  --amber:#F2A541; --teal:#17706F; --pink:#FBE4EA; --body:#3B4560; --blue:#D6DCEB; --err:#B3261E;
+  --head:'Rubik',system-ui,sans-serif; --text:'Nunito Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{color-scheme:light}
+body{margin:0;background:var(--cream);color:var(--body);font:17px/1.5 var(--text);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.wrap{max-width:680px;margin:0 auto}
+header{background:var(--navy);color:#fff;margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));
+  padding:36px max(16px,env(safe-area-inset-left,0px)) 64px;position:relative;overflow:hidden}
+header .in{max-width:680px;margin:0 auto;position:relative}
+.eyebrow{font:700 13px var(--head);letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+h1{font:800 clamp(30px,7vw,46px)/1.05 var(--head);margin:0 0 12px;text-wrap:balance}
+header p{margin:0;color:var(--blue);max-width:46ch}
+.tiles{position:absolute;right:-10px;top:-14px;display:flex;gap:6px;transform:rotate(8deg);opacity:.9}
+.tiles i{display:block;border-radius:5px}
+.tiles .x{width:22px;height:70px;background:var(--teal)}
+.tiles .u{width:22px;height:22px;background:var(--amber);align-self:flex-end}
+.tiles .n{width:22px;height:22px;background:#E9708C;align-self:flex-end}
+@media (max-width:480px){.tiles{display:none}}
+.tabs{display:flex;gap:8px;margin:-32px 0 20px;position:relative}
+.tab{flex:1;border:2px solid var(--border);background:var(--card);border-radius:14px;padding:12px 14px;text-align:left;
+  font:600 15px var(--head);color:var(--body);cursor:pointer;min-height:56px}
+.tab small{display:block;font:400 13px var(--text);color:#6b7390}
+.tab[aria-selected=true]{background:var(--amber);border-color:var(--amber);color:var(--navy)}
+.tab[aria-selected=true] small{color:var(--navy)}
+.tab:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+form{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;display:grid;gap:22px}
+form[hidden]{display:none}
+h2{font:700 24px/1.2 var(--head);color:var(--navy);margin:0}
+.lead{margin:-12px 0 0;color:#5b6483;font-size:15px}
+label,.q{display:block;font:600 15px/1.35 var(--head);color:var(--navy);margin-bottom:6px}
+.req::after{content:" *";color:var(--err)}
+input[type=text],input[type=email],select,textarea{width:100%;font:17px var(--text);color:var(--navy);background:#fff;
+  border:2px solid var(--border);border-radius:10px;padding:11px 12px}
+textarea{min-height:92px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--teal)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{margin:0;font:600 15px var(--text);color:var(--body);cursor:pointer}
+.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips span{display:inline-block;border:2px solid var(--border);background:#fff;border-radius:999px;padding:8px 16px;min-height:44px;line-height:26px}
+.chips input:checked+span{background:var(--navy);border-color:var(--navy);color:#fff}
+.chips input:focus-visible+span{outline:3px solid var(--teal);outline-offset:2px}
+.rate{display:grid;gap:14px}
+.rate .row{background:var(--pink);border-radius:12px;padding:12px 14px}
+.rate .row .q{margin-bottom:8px;font-weight:500;font-size:16px}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.scale label{margin:0}
+.scale input{position:absolute;opacity:0;pointer-events:none}
+.scale span{display:block;text-align:center;border:2px solid #fff;background:#fff;border-radius:10px;padding:8px 0;min-height:44px;font:700 17px var(--head);color:var(--navy);cursor:pointer}
+.scale input:checked+span{background:var(--teal);border-color:var(--teal);color:#fff}
+.scale input:focus-visible+span{outline:3px solid var(--navy);outline-offset:2px}
+.ends{display:flex;justify-content:space-between;font-size:12px;color:#6b7390;margin-top:4px}
+.go{font:700 18px var(--head);background:var(--navy);color:#fff;border:0;border-radius:12px;padding:16px;cursor:pointer;min-height:56px}
+.go:hover{background:var(--navy2)}
+.go[disabled]{opacity:.6;cursor:wait}
+.err{color:var(--err);font-weight:600;margin:0}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.done{text-align:center;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:40px 24px}
+.done[hidden]{display:none}
+.done h2{margin-bottom:8px}
+.done .ok{width:64px;height:64px;border-radius:50%;background:var(--teal);color:#fff;font:800 34px/64px var(--head);margin:0 auto 14px}
+.link{background:none;border:0;color:var(--teal);font:700 16px var(--text);text-decoration:underline;cursor:pointer;padding:8px}
+.demo{background:var(--blue);color:var(--navy);border-radius:10px;padding:10px 14px;font-size:14px;margin:0 0 16px}
+.demo[hidden]{display:none}
+@media (prefers-reduced-motion:no-preference){.done .ok{animation:pop .4s ease-out}@keyframes pop{from{transform:scale(.5);opacity:0}to{transform:none;opacity:1}}}
+</style>
+</head>
+<body>
+<header>
+  <div class="in">
+    <div class="tiles" aria-hidden="true"><i class="x"></i><i class="x"></i><i class="u"></i><i class="u"></i><i class="n"></i></div>
+    <p class="eyebrow">Math PD &middot; Grades 6 to 8 &middot; Oct 14, 2026</p>
+    <h1>Small Groups That Work</h1>
+    <p>Savvas HQIM, centers, games and manipulatives. Sign in when you arrive. Come back to the second tab before you leave.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="demo" id="demo" hidden>Preview mode. Nothing is sent until you add your Formspree link in the file (see ENDPOINT near the bottom).</div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="t-in" aria-selected="true" aria-controls="f-in">Step 1<small>Sign in</small></button>
+    <button class="tab" role="tab" id="t-out" aria-selected="false" aria-controls="f-out">Step 2<small>Feedback</small></button>
+  </div>
+
+  <form id="f-in" aria-labelledby="t-in" novalidate>
+    <h2>Welcome. Sign in.</h2>
+    <p class="lead">Takes about a minute. This is also how you get today's materials.</p>
+    <input type="hidden" name="form" value="sign-in">
+    <div class="hp"><label>Leave blank <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+    <div><label class="req" for="i-name">Full name</label><input type="text" id="i-name" name="name" autocomplete="name"></div>
+    <div><label class="req" for="i-email">Email</label><input type="email" id="i-email" name="email" autocomplete="email"></div>
+    <div><label class="req" for="i-school">School or district</label><input type="text" id="i-school" name="school" autocomplete="organization"></div>
+    <div><label for="i-role">Your role</label>
+      <select id="i-role" name="role"><option value="">Choose one</option><option>Classroom teacher</option><option>Math coach</option><option>Interventionist</option><option>Administrator</option><option>Other</option></select></div>
+    <div><span class="q">Grades you teach or support</span>
+      <div class="chips"><label><input type="checkbox" name="grades" value="6"><span>6</span></label><label><input type="checkbox" name="grades" value="7"><span>7</span></label><label><input type="checkbox" name="grades" value="8"><span>8</span></label><label><input type="checkbox" name="grades" value="Other"><span>Other</span></label></div></div>
+    <div><span class="q">What did you bring today?</span>
+      <div class="chips"><label><input type="checkbox" name="devices" value="Laptop or Chromebook"><span>Laptop or Chromebook</span></label><label><input type="checkbox" name="devices" value="iPad or tablet"><span>iPad or tablet</span></label><label><input type="checkbox" name="devices" value="Phone only"><span>Phone only</span></label></div></div>
+    <div><span class="q">Can you log in to Savvas Realize?</span>
+      <div class="chips"><label><input type="radio" name="realize" value="Yes"><span>Yes</span></label><label><input type="radio" name="realize" value="Not sure"><span>Not sure</span></label><label><input type="radio" name="realize" value="No"><span>No</span></label></div></div>
+    <div><span class="q">Does your school have Brainingcamp?</span>
+      <div class="chips"><label><input type="radio" name="brainingcamp" value="Yes"><span>Yes</span></label><label><input type="radio" name="brainingcamp" value="Not sure"><span>Not sure</span></label><label><input type="radio" name="brainingcamp" value="No"><span>No</span></label></div></div>
+    <div><label for="i-want">One thing you want from today</label><textarea id="i-want" name="want_from_today"></textarea></div>
+    <p class="err" id="e-in" role="alert" hidden></p>
+    <button class="go" type="submit">Check me in</button>
+  </form>
+
+  <form id="f-out" aria-labelledby="t-out" novalidate hidden>
+    <h2>Before you go.</h2>
+    <p class="lead">1 means not at all. 5 means absolutely.</p>
+    <input type="hidden" name="form" value="feedback">
+    <div class="hp"><label>Leave blank <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+    <div><label class="req" for="o-name">Full name</label><input type="text" id="o-name" name="name" autocomplete="name"></div>
+    <div><label class="req" for="o-email">Email</label><input type="email" id="o-email" name="email" autocomplete="email"></div>
+    <div class="rate" id="rate"></div>
+    <div><span class="q">Which parts were most useful?</span>
+      <div class="chips" id="best"></div></div>
+    <div><label for="o-change">What should I change or cut?</label><textarea id="o-change" name="change"></textarea></div>
+    <div><label for="o-try">What will you try first next week?</label><textarea id="o-try" name="try_first"></textarea></div>
+    <div><span class="q">Want a follow-up?</span>
+      <div class="chips"><label><input type="checkbox" name="followup" value="20 minute co-planning call"><span>20 minute co-planning call</span></label><label><input type="checkbox" name="followup" value="Send me the materials again"><span>Send me the materials</span></label></div></div>
+    <div><label for="o-more">Anything else?</label><textarea id="o-more" name="anything_else"></textarea></div>
+    <p class="err" id="e-out" role="alert" hidden></p>
+    <button class="go" type="submit">Send feedback</button>
+  </form>
+
+  <section class="done" id="done" hidden aria-live="polite">
+    <div class="ok" aria-hidden="true">&#10003;</div>
+    <h2 id="done-h"></h2>
+    <p id="done-p"></p>
+    <button class="link" id="done-btn" type="button"></button>
+  </section>
+</main>
+
+<script>
+// 1. Paste your Formspree link between the quotes, like https://formspree.io/f/abcdwxyz
+var ENDPOINT = "https://formspree.io/f/mwlvrdro";
+
+var RATINGS = [
+  ["good_use_of_time", "Today was a good use of my time"],
+  ["can_run_rotation", "I can run a small group rotation next week"],
+  ["games_useful", "The games helped me see real math thinking"],
+  ["studio_confidence", "I know how to use Savvas Studio for small groups"],
+  ["brainingcamp_confidence", "I can use Brainingcamp algebra tiles with students"],
+  ["planning_time", "The planning time gave me something I can use"]
+];
+var BEST = ["Rotation as students","Group from evidence","Games","Savvas Studio","Brainingcamp","Coherence and rigor","MIOP look-fors","Planning time","Share out"];
+
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;")}
+
+$("rate").innerHTML = RATINGS.map(function(r){
+  var h = '<div class="row"><span class="q">'+esc(r[1])+'</span><div class="scale" role="radiogroup" aria-label="'+esc(r[1])+'">';
+  for(var i=1;i<=5;i++) h += '<label><input type="radio" name="'+r[0]+'" value="'+i+'"><span>'+i+'</span></label>';
+  return h + '</div><div class="ends"><span>Not at all</span><span>Absolutely</span></div></div>';
+}).join("");
+$("best").innerHTML = BEST.map(function(b){return '<label><input type="checkbox" name="most_useful" value="'+esc(b)+'"><span>'+esc(b)+'</span></label>'}).join("");
+
+if(!ENDPOINT) $("demo").hidden = false;
+
+// remember who you are between the two steps
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+["name","email"].forEach(function(k){
+  var v = store("pd_"+k);
+  if(v){ $("o-"+k).value = v; if(!$("i-"+k).value) $("i-"+k).value = v; }
+});
+
+function show(which){
+  var out = which === "out";
+  $("f-in").hidden = out; $("f-out").hidden = !out; $("done").hidden = true;
+  $("t-in").setAttribute("aria-selected", String(!out));
+  $("t-out").setAttribute("aria-selected", String(out));
+  window.scrollTo({top:0});
+}
+$("t-in").onclick = function(){show("in")};
+$("t-out").onclick = function(){show("out")};
+
+function collect(form){
+  var fd = new FormData(form), o = {};
+  fd.forEach(function(v,k){
+    if(k in o){ o[k] = [].concat(o[k], v); } else { o[k] = v; }
+  });
+  Object.keys(o).forEach(function(k){ if(Array.isArray(o[k])) o[k] = o[k].join(", "); });
+  return o;
+}
+
+function submit(form, errEl, kind){
+  errEl.hidden = true;
+  var d = collect(form);
+  var bad = [];
+  var p = kind === "in" ? "i-" : "o-";
+  if(!d.name || !d.name.trim()) bad.push("name");
+  if(!d.email || !/^\S+@\S+\.\S+$/.test(d.email)) bad.push("a valid email");
+  if(kind === "in" && (!d.school || !d.school.trim())) bad.push("school or district");
+  if(bad.length){ errEl.textContent = "Please add your " + bad.join(", ") + "."; errEl.hidden = false; return; }
+  if(d._gotcha) return;
+  store("pd_name", d.name.trim()); store("pd_email", d.email.trim());
+  d._subject = (kind === "in" ? "PD sign-in: " : "PD feedback: ") + d.name;
+  d.submitted_at = new Date().toISOString();
+  var btn = form.querySelector(".go"); btn.disabled = true;
+  var finish = function(){ btn.disabled = false; done(kind, d); };
+  if(!ENDPOINT){ setTimeout(finish, 400); return; }
+  fetch(ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"}, body: JSON.stringify(d)})
+    .then(function(r){ if(!r.ok) throw new Error("bad"); finish(); })
+    .catch(function(){ btn.disabled = false; errEl.textContent = "That did not send. Check your connection and tap the button again."; errEl.hidden = false; });
+}
+
+function done(kind, d){
+  $("f-in").hidden = true; $("f-out").hidden = true; $("done").hidden = false;
+  var first = (d.name||"").trim().split(/\s+/)[0];
+  if(kind === "in"){
+    $("done-h").textContent = "You're in, " + first + ".";
+    $("done-p").textContent = "Grab a seat at any table and say hi to your neighbor. Feedback opens at the end of the day.";
+    $("done-btn").textContent = "Go to feedback";
+    $("done-btn").onclick = function(){ show("out"); };
+  } else {
+    $("done-h").textContent = "Thank you, " + first + ".";
+    $("done-p").textContent = "Your answers go straight to me. Go try a game this week.";
+    $("done-btn").textContent = "Back to the start";
+    $("done-btn").onclick = function(){ show("in"); };
+  }
+  window.scrollTo({top:0});
+}
+
+$("f-in").addEventListener("submit", function(e){ e.preventDefault(); submit(this, $("e-in"), "in"); });
+$("f-out").addEventListener("submit", function(e){ e.preventDefault(); submit(this, $("e-out"), "out"); });
+</script>
+</body>
+</html>
